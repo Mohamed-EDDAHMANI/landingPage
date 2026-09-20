@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Service Canin</title>
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Montserrat:wght@400;500;600;700&display=swap");
+
+  :root {
+    --navy-950: #060f22;
+    --navy-900: #0a1a34;
+    --navy-800: #0d2143;
+    --navy-700: #14315e;
+    --gold: #d8b768;
+    --gold-light: #f1d990;
+    --gold-dim: rgba(216, 183, 104, 0.32);
+    --ivory: #f8f2e6;
+    --ink: #fbf7ed;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  a { text-decoration: none; color: inherit; }
+
+  body {
+    margin: 0;
+    font-family: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--navy-950);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img { max-width: 100%; }
+
+  .font-display { font-family: "Cormorant Garamond", Georgia, serif; }
+  .gold-text { color: var(--gold-light); }
+
+  .shell { max-width: 74rem; margin-inline: auto; padding-inline: 24px; }
+
+  .eyebrow {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .rule {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .rule.left { background: linear-gradient(90deg, var(--gold), transparent); }
+
+  /* ---------- Nav ---------- */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 16px max(20px, env(safe-area-inset-left, 0px));
+    background: rgba(6, 15, 34, 0.88);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--gold-dim);
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-mark {
+    width: 44px; height: 44px;
+    display: grid; place-items: center;
+    color: var(--gold-light);
+    flex: none;
+  }
+  .brand-name {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--gold-light);
+    font-size: 1.15rem;
+    white-space: nowrap;
+  }
+  .nav-links { display: flex; gap: 30px; font-size: 0.82rem; letter-spacing: 0.04em; }
+  .nav-links a { color: var(--ivory); opacity: 0.85; transition: opacity .2s, color .2s; }
+  .nav-links a:hover { opacity: 1; color: var(--gold-light); }
+  .nav-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid var(--gold); background: var(--gold); color: var(--navy-950);
+    font-weight: 700; font-size: 0.78rem; letter-spacing: 0.04em;
+    padding: 10px 16px; border-radius: 3px;
+    transition: background .2s ease;
+    flex: none;
+  }
+  .nav-cta:hover { background: var(--gold-light); }
+  .nav-cta .label { display: inline; }
+  @media (max-width: 680px) {
+    .nav-links { display: none; }
+    .nav-cta .label { display: none; }
+    .nav-cta { padding: 10px; }
+  }
+
+  /* ---------- Sunburst medallion ---------- */
+  .medallion {
+    --size: 118px;
+    position: relative;
+    width: var(--size); height: var(--size);
+    border-radius: 50%;
+    display: grid; place-items: center;
+    background: repeating-conic-gradient(from 0deg, var(--gold) 0deg 1.6deg, transparent 1.6deg 16deg);
+    flex: none;
+  }
+  .medallion::before {
+    content: ""; position: absolute; inset: 12%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 32% 28%, var(--navy-700), var(--navy-950) 72%);
+    border: 1px solid var(--gold);
+  }
+  .medallion .icon { position: relative; width: 38%; height: 38%; color: var(--gold-light); }
+  .medallion.small { --size: 64px; }
+
+  .icon { fill: none; stroke: currentColor; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
+  .icon.filled { fill: currentColor; stroke: none; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    overflow: clip;
+    padding-block: clamp(64px, 12vw, 120px) clamp(56px, 10vw, 96px);
+    background:
+      radial-gradient(ellipse 60% 55% at 78% 8%, rgba(216,183,104,0.12), transparent 60%),
+      linear-gradient(180deg, var(--navy-950), #08132a 60%, var(--navy-950));
+  }
+  .hero-sun {
+    position: absolute;
+    top: 50%; right: -10%;
+    width: 620px; height: 620px;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background: repeating-conic-gradient(from 0deg, rgba(216,183,104,0.5) 0deg 0.6deg, transparent 0.6deg 9deg);
+    -webkit-mask-image: radial-gradient(circle, black 42%, transparent 72%);
+    mask-image: radial-gradient(circle, black 42%, transparent 72%);
+    opacity: 0.28;
+    pointer-events: none;
+  }
+  .hero-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: clamp(28px, 6vw, 60px);
+    align-items: center;
+  }
+  @media (max-width: 880px) {
+    .hero-grid { grid-template-columns: 1fr; text-align: center; }
+    .hero-visual { order: -1; margin-inline: auto; }
+  }
+
+  .btn-call {
+    display: inline-flex; align-items: center; gap: 0.7rem;
+    border: 1px solid var(--gold); background: var(--gold); color: var(--navy-950);
+    font-weight: 700; letter-spacing: 0.06em; font-size: 0.9rem;
+    padding: 0.95rem 1.6rem; border-radius: 3px;
+    transition: background .2s ease, transform .2s ease;
+  }
+  .btn-call:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .btn-call.ghost { background: transparent; color: var(--gold-light); }
+  .btn-call.ghost:hover { background: rgba(216,183,104,0.1); }
+  .btn-call:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 3px; }
+
+  .hero-crest {
+    width: min(320px, 62vw); height: min(320px, 62vw);
+    color: var(--gold-light);
+    filter: drop-shadow(0 18px 34px rgba(0,0,0,0.35));
+  }
+  .hero-visual { position: relative; display: grid; place-items: center; }
+
+  /* ---------- Section bands ---------- */
+  .band { padding-block: clamp(56px, 9vw, 96px); }
+  .band.alt { background: var(--navy-900); border-block: 1px solid var(--gold-dim); }
+
+  .section-head { text-align: center; margin-bottom: clamp(32px, 6vw, 52px); }
+  .section-head h2 {
+    margin: 10px 0 0; font-weight: 700; font-size: clamp(2rem, 4.6vw, 3rem); color: var(--gold-light);
+  }
+  .section-head .rule { max-width: 10rem; margin: 18px auto 0; }
+
+  /* ---------- Services ---------- */
+  .services-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 22px;
+  }
+  .service-card {
+    position: relative;
+    background: var(--navy-800);
+    border: 1px solid var(--gold-dim);
+    border-radius: 6px;
+    padding: 32px 26px;
+    text-align: center;
+    transition: transform .25s ease, border-color .25s ease;
+  }
+  .service-card::before {
+    content: ""; position: absolute; top: 0; left: 14%; right: 14%; height: 2px;
+    background: var(--gold);
+  }
+  .service-card:hover { transform: translateY(-4px); border-color: var(--gold); }
+  .service-card h3 { margin: 16px 0 0; font-weight: 700; font-size: 1.7rem; color: var(--gold-light); }
+  .service-card p { margin-top: 12px; font-size: 0.88rem; line-height: 1.7; color: rgba(248,242,230,.82); min-height: 3.4em; }
+  .service-price { margin-top: 18px; font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.6rem; color: var(--gold-light); }
+  .service-link { display: inline-block; margin-top: 14px; font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gold); border-bottom: 1px solid var(--gold-dim); padding-bottom: 2px; }
+  .service-link:hover { color: var(--gold-light); border-color: var(--gold-light); }
+
+  /* ---------- Why us ---------- */
+  .why-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(30px,6vw,60px); align-items: start; }
+  @media (max-width: 820px) { .why-grid { grid-template-columns: 1fr; } }
+  .why-list { display: flex; flex-direction: column; gap: 30px; }
+  .why-item { display: grid; grid-template-columns: 56px 1fr; gap: 18px; }
+  .why-item h3 { margin: 0 0 6px; font-weight: 700; font-size: 1.3rem; color: var(--gold-light); }
+  .why-item p { margin: 0; font-size: 0.88rem; line-height: 1.75; color: rgba(248,242,230,.85); }
+
+  /* ---------- CTA band ---------- */
+  .cta-band {
+    background: linear-gradient(120deg, var(--gold) 0%, #c7a35a 100%);
+    color: var(--navy-950);
+    padding-block: clamp(48px, 8vw, 76px);
+    text-align: center;
+  }
+  .cta-band h2 { margin: 0; font-weight: 700; font-size: clamp(1.9rem, 4.4vw, 2.8rem); }
+  .cta-band p { margin: 12px 0 0; font-size: 0.95rem; opacity: 0.85; }
+  .cta-band .btn-call { margin-top: 26px; background: var(--navy-950); color: var(--gold-light); border-color: var(--navy-950); }
+  .cta-band .btn-call:hover { background: #0d2145; }
+
+  /* ---------- Footer ---------- */
+  .foot { background: var(--navy-950); border-top: 1px solid var(--gold-dim); padding-block: 44px 24px; }
+  .foot-grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 32px; }
+  @media (max-width: 680px) { .foot-grid { grid-template-columns: 1fr; text-align: center; gap: 26px; } }
+  .foot h4 { margin: 0 0 12px; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); }
+  .foot ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; font-size: 0.85rem; color: rgba(248,242,230,.8); }
+  .foot-bottom { margin-top: 36px; padding-top: 20px; border-top: 1px solid rgba(216,183,104,0.15); text-align: center; font-size: 0.68rem; letter-spacing: 0.08em; color: rgba(248,242,230,.4); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fade-up { animation: fadeUp .7s ease both; }
+    .fade-up.d1 { animation-delay: .1s; }
+    .fade-up.d2 { animation-delay: .2s; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  }
+</style>
+</head>
+<body>
+
+
+<svg style="display:none" aria-hidden="true">
+  <defs>
+    <symbol id="icon-paw" viewBox="0 0 64 64">
+      <ellipse class="filled" cx="32" cy="43" rx="15" ry="12"/>
+      <circle class="filled" cx="13" cy="24" r="7"/>
+      <circle class="filled" cx="27" cy="13" r="7"/>
+      <circle class="filled" cx="41" cy="13" r="7"/>
+      <circle class="filled" cx="54" cy="24" r="7"/>
+    </symbol>
+    <symbol id="icon-leash" viewBox="0 0 64 64">
+      <circle cx="15" cy="15" r="8"/>
+      <path d="M15,23 C15,36 47,31 47,46 C47,53 39,56 32,53"/>
+      <circle class="filled" cx="49" cy="47" r="4"/>
+    </symbol>
+    <symbol id="icon-scissors" viewBox="0 0 64 64">
+      <circle cx="15" cy="16" r="7.5"/>
+      <circle cx="15" cy="48" r="7.5"/>
+      <line x1="20.5" y1="21.5" x2="53" y2="53"/>
+      <line x1="20.5" y1="42.5" x2="53" y2="11"/>
+    </symbol>
+    <symbol id="icon-heart" viewBox="0 0 64 64">
+      <path d="M32,54 C10,40 6,25 16,16 C23,10 30,13 32,20 C34,13 41,10 48,16 C58,25 54,40 32,54 Z"/>
+    </symbol>
+    <symbol id="icon-pin" viewBox="0 0 64 64">
+      <path d="M32,58 C20,42 12,32 12,22 a20,20 0 0 1 40,0 C52,32 44,42 32,58 Z"/>
+      <circle class="filled" cx="32" cy="22" r="7"/>
+    </symbol>
+    <symbol id="icon-phone" viewBox="0 0 64 64">
+      <path d="M14,10 h10 l5,13 -7,5 c3,9 9,15 18,18 l5,-7 13,5 v10 c0,4 -3,7 -7,6 C31,58 8,35 8,17 c-1,-4 2,-7 6,-7 Z"/>
+    </symbol>
+    <path id="leaf-shape" d="M0,0 C-6,-7 -6,-19 0,-27 C6,-19 6,-7 0,0 Z"/>
+    <symbol id="icon-crest" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="94" fill="none" stroke="currentColor" stroke-width="2.2"/>
+      <circle cx="100" cy="100" r="86" fill="none" stroke="currentColor" stroke-width="1"/>
+      <g fill="currentColor">
+        <use href="#leaf-shape" transform="translate(97.4 174.0) rotate(-111.6)"/>
+        <use href="#leaf-shape" transform="translate(73.3 169.0) rotate(-92.5)"/>
+        <use href="#leaf-shape" transform="translate(52.2 156.5) rotate(-73.4)"/>
+        <use href="#leaf-shape" transform="translate(36.3 137.7) rotate(-54.3)"/>
+        <use href="#leaf-shape" transform="translate(27.5 114.8) rotate(-35.2)"/>
+        <use href="#leaf-shape" transform="translate(26.6 90.3) rotate(-16.1)"/>
+        <use href="#leaf-shape" transform="translate(33.9 66.8) rotate(3.0)"/>
+        <use href="#leaf-shape" transform="translate(48.4 47.0) rotate(22.1)"/>
+        <use href="#leaf-shape" transform="translate(68.6 33.0) rotate(41.3)"/>
+        <use href="#leaf-shape" transform="translate(92.3 26.4) rotate(60.4)"/>
+        <use href="#leaf-shape" transform="translate(102.6 174.0) rotate(111.6)"/>
+        <use href="#leaf-shape" transform="translate(126.7 169.0) rotate(92.5)"/>
+        <use href="#leaf-shape" transform="translate(147.8 156.5) rotate(73.4)"/>
+        <use href="#leaf-shape" transform="translate(163.7 137.7) rotate(54.3)"/>
+        <use href="#leaf-shape" transform="translate(172.5 114.8) rotate(35.2)"/>
+        <use href="#leaf-shape" transform="translate(173.4 90.3) rotate(16.1)"/>
+        <use href="#leaf-shape" transform="translate(166.1 66.8) rotate(-3.0)"/>
+        <use href="#leaf-shape" transform="translate(151.6 47.0) rotate(-22.1)"/>
+        <use href="#leaf-shape" transform="translate(131.4 33.0) rotate(-41.3)"/>
+        <use href="#leaf-shape" transform="translate(107.7 26.4) rotate(-60.4)"/>
+      </g>
+      <g fill="currentColor" transform="translate(38,39) scale(1.85)">
+        <ellipse cx="32" cy="43" rx="15" ry="12"/>
+        <circle cx="13" cy="24" r="7"/>
+        <circle cx="27" cy="13" r="7"/>
+        <circle cx="41" cy="13" r="7"/>
+        <circle cx="54" cy="24" r="7"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- Nav -->
+<nav class="nav">
+  <a href="#top" class="brand">
+    <span class="brand-mark"><svg viewBox="0 0 200 200" style="width:100%;height:100%;"><use href="#icon-crest"/></svg></span>
+    <span class="brand-name">SERVICE&nbsp;CANIN</span>
+  </a>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#pourquoi">Pourquoi nous</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="tel:+212613251353" class="nav-cta">
+    <svg class="icon filled" style="width:0.9rem;height:0.9rem;"><use href="#icon-phone"/></svg>
+    <span class="label">+212 613 251 353</span>
+  </a>
+</nav>
+
+<main id="top">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-sun" aria-hidden="true"></div>
+    <div class="shell hero-grid">
+      <div class="fade-up" style="text-align:left;">
+        <p class="eyebrow" style="margin:0 0 14px;">Casablanca · Maroc</p>
+        <h1 class="font-display gold-text" style="margin:0; font-weight:700; line-height:0.98; font-size: clamp(2.6rem, 6.4vw, 4.6rem);">
+          Un compagnon<br>équilibré &amp; heureux
+        </h1>
+        <p class="font-display" style="margin: 22px 0 0; max-width: 34rem; font-style: italic; color: var(--ivory); font-size: clamp(1.15rem, 2.4vw, 1.5rem); line-height: 1.4;">
+          Dressage, promenade et toilettage sur-mesure, avec patience et bienveillance — à Casablanca.
+        </p>
+        <div style="display:flex; flex-wrap:wrap; gap: 14px; margin-top: 32px;">
+          <a href="tel:+212613251353" class="btn-call">
+            <svg class="icon filled" style="width:1rem;height:1rem;"><use href="#icon-phone"/></svg>
+            +212 613 251 353
+          </a>
+          <a href="#services" class="btn-call ghost">Voir les services</a>
+        </div>
+      </div>
+
+      <div class="hero-visual fade-up d1">
+        <svg class="hero-crest" viewBox="0 0 200 200"><use href="#icon-crest"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="band" id="services">
+    <div class="shell">
+      <div class="section-head">
+        <p class="eyebrow">Nos prestations</p>
+        <h2 class="font-display">Nos services</h2>
+        <div class="rule"></div>
+      </div>
+
+      <div class="services-grid">
+        <article class="service-card">
+          <div class="medallion small" style="margin-inline:auto;"><svg class="icon"><use href="#icon-paw"/></svg></div>
+          <h3 class="font-display">Dressage</h3>
+          <p>Dressage personnalisé pour accompagner votre chien avec patience et bienveillance.</p>
+          <p class="service-price">100 DH / heure</p>
+          <a href="tel:+212613251353" class="service-link">Réserver</a>
+        </article>
+
+        <article class="service-card">
+          <div class="medallion small" style="margin-inline:auto;"><svg class="icon"><use href="#icon-leash"/></svg></div>
+          <h3 class="font-display">Promenade</h3>
+          <p>Promenades quotidiennes adaptées aux besoins et à l'équilibre de votre chien.</p>
+          <p class="service-price">50 DH / heure</p>
+          <a href="tel:+212613251353" class="service-link">Réserver</a>
+        </article>
+
+        <article class="service-card">
+          <div class="medallion small" style="margin-inline:auto;"><svg class="icon"><use href="#icon-scissors"/></svg></div>
+          <h3 class="font-display">Toilettage</h3>
+          <p>Soins adaptés pour le bien-être et le confort de votre compagnon.</p>
+          <p class="service-price">150 DH</p>
+          <a href="tel:+212613251353" class="service-link">Réserver</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why us -->
+  <section class="band alt" id="pourquoi">
+    <div class="shell why-grid">
+      <div>
+        <p class="eyebrow">Notre approche</p>
+        <h2 class="font-display gold-text" style="margin:10px 0 0; font-weight:700; font-size: clamp(1.9rem, 4vw, 2.6rem); line-height:1.1;">
+          Pourquoi nous choisir ?
+        </h2>
+        <div class="rule left" style="margin: 20px 0; max-width: 8rem;"></div>
+        <p style="font-size:0.9rem; line-height:1.8; color: rgba(248,242,230,.8); max-width: 30rem;">
+          Basés à Casablanca, nous accompagnons chaque chien et chaque maître avec des méthodes positives, modernes et adaptées à la vraie vie de la ville.
+        </p>
+      </div>
+
+      <div class="why-list">
+        <div class="why-item">
+          <div class="medallion small"><svg class="icon" style="color:var(--gold-light);"><use href="#icon-heart"/></svg></div>
+          <div>
+            <h3>Expertise &amp; méthode bienveillante</h3>
+            <p>Des méthodes positives et modernes pour renforcer la confiance, l'obéissance et le lien entre vous et votre compagnon.</p>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="medallion small"><svg class="icon" style="color:var(--gold-light);"><use href="#icon-paw"/></svg></div>
+          <div>
+            <h3>Services complets</h3>
+            <p>Du dressage personnalisé à l'éducation pour chiots, promenades quotidiennes et soins adaptés — à domicile et en centre.</p>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="medallion small"><svg class="icon" style="color:var(--gold-light);"><use href="#icon-pin"/></svg></div>
+          <div>
+            <h3>Confiance &amp; proximité</h3>
+            <p>Disponibles, à l'écoute et passionnés, pour un chien épanoui et heureux au quotidien à Casablanca.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-band" id="contact">
+    <div class="shell">
+      <h2 class="font-display">Prêt à commencer ?</h2>
+      <p>Appelez-nous dès maintenant pour réserver votre séance.</p>
+      <a href="tel:+212613251353" class="btn-call">
+        <svg class="icon filled" style="width:1rem;height:1rem;"><use href="#icon-phone"/></svg>
+        +212 613 251 353
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="foot">
+    <div class="shell foot-grid">
+      <div>
+        <div class="brand" style="margin-bottom:12px; justify-content:center;">
+          <span class="brand-mark"><svg viewBox="0 0 200 200" style="width:100%;height:100%;"><use href="#icon-crest"/></svg></span>
+          <span class="brand-name">SERVICE CANIN</span>
+        </div>
+        <p style="font-size:0.82rem; line-height:1.7; color: rgba(248,242,230,.65); max-width:22rem; margin-inline:auto;">
+          Dressage, promenade et toilettage canin à Casablanca — avec patience et bienveillance.
+        </p>
+      </div>
+      <div>
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#pourquoi">Pourquoi nous</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+212613251353">+212 613 251 353</a></li>
+          <li>Casablanca, Maroc</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">DRESSAGE CHIEN · PROMENADE · TOILETTAGE À CASABLANCA</div>
+  </footer>
+
+</main>
+
+</body>
+</html>
